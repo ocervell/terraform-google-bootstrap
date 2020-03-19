@@ -65,6 +65,8 @@ Functional examples and sample Cloud Build definitions are included in the [exam
 | terraform\_sa\_email | Email for terraform service account. | string | n/a | yes |
 | terraform\_sa\_name | Fully-qualified name of the terraform service account. | string | n/a | yes |
 | terraform\_state\_bucket | Default state bucket, used in Cloud Build substitutions. | string | n/a | yes |
+| terraform\_version | Default terraform version. | string | `"0.12.23"` | no |
+| terraform\_version\_sha256sum | sha256sum for default terraform version. | string | `"78fd53c0fffd657ee0ab5decac604b0dea2e6c0d4199a9f27db53f081d831a45"` | no |
 
 ## Outputs
 

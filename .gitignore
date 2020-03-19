@@ -51,3 +51,4 @@ override.tf.json
 .idea/
 
 setup-tests.sh
+modules/cloudbuild/cloudbuild_builder/Dockerfile

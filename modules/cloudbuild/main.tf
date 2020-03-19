@@ -224,9 +224,23 @@ resource "google_cloudbuild_trigger" "non_master_trigger" {
  Cloud Build - Terraform builder
  ***********************************************/
 
+data "template_file" "dockerfile" {
+  template = "${file("${path.module}/cloudbuild_builder/Dockerfile.tpl")}"
+  vars = {
+    terraform_version_sha256sum = var.terraform_version_sha256sum
+    terraform_version           = var.terraform_version
+  }
+}
+
+resource "local_file" "dockerfile" {
+  content  = data.template_file.dockerfile.rendered
+  filename = "${path.module}/cloudbuild_builder/Dockerfile"
+}
+
 resource "null_resource" "cloudbuild_terraform_builder" {
   triggers = {
     project_id_seed_project = module.cloudbuild_project.project_id
+    template_file           = data.template_file.dockerfile.rendered
   }
 
   provisioner "local-exec" {
@@ -234,6 +248,7 @@ resource "null_resource" "cloudbuild_terraform_builder" {
   }
   depends_on = [
     google_project_service.cloudbuild_apis,
+    local_file.dockerfile
   ]
 }
 
